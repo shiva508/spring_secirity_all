@@ -5,7 +5,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.DigestAuthenticationEntryPoint;
 
-@Configuration
+//@Configuration
 public class AdminSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private AuthenticationEntryPoint getDigetstEntryPoint() {
 		DigestAuthenticationEntryPoint entryPoint = new DigestAuthenticationEntryPoint();
