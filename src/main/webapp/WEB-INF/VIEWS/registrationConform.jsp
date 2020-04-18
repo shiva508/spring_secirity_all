@@ -78,7 +78,7 @@
     </tr>
     <tr>
       <th scope="row">Email address</th>
-      <td>${registration.email }</td>
+      <td>${registration.userName }</td>
     </tr>
     <tr>
       <th scope="row">Password</th>

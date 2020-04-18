@@ -2,6 +2,7 @@ package com.security.controller.web;
 
 import java.util.List;
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -25,7 +26,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.security.forms.Feedback;
 import com.security.forms.RegistrationForm;
 import com.security.forms.RoleForm;
-import com.security.model.User;
 import com.security.service.mail.MailService;
 import com.security.service.registration.RegistrationService;
 
@@ -80,7 +80,8 @@ public class RegistartionController {
 		if (result.hasErrors()) {
 			view = "welcome";
 		} else {
-			Long userid=registrationService.isUserExist(registration.getEmail());
+			System.out.println(registration.getUserName());
+			Long userid=registrationService.isUserExist(registration.getUserName());
 			if(userid>0) {
 				view="UserExist";
 			}else {

@@ -99,6 +99,7 @@ body {
 <link href="${select2mincss}" rel="stylesheet" type="text/css" />
 </head>
 <body>
+<jsp:include page="header.jsp" flush="true"></jsp:include>
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-6 ">

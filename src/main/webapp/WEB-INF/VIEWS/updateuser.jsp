@@ -122,13 +122,13 @@
 
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="exampleInputEmail1">Email address</label> <form:input path="email"
+						<label for="exampleInputEmail1">Email address</label> <form:input path="userName"
 							style="width: 271px" type="email" class="form-control"
 							id="exampleInputEmail1" aria-describedby="emailHelp"
 							placeholder="Enter email"/> <small id="emailHelp"
 							class="form-text text-muted">We'll never share your email
 							with anyone else.</small>
-							<form:errors path="email"></form:errors>
+							<form:errors path="userName"></form:errors>
 					</div>
 				</div>
 				<div class="col-sm-6">

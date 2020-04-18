@@ -1,40 +1,67 @@
 package com.security.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
+
+
 
 @Entity
-@Table
-public class Registration {
+@Table(name = "users")
+public class Registration{
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer userId;
-
 	private String firstName;
 	private String lastName;
-
 	private String fatherName;
-
 	private String motherName;
-
 	private String adharNumber;
 	private String phoneNumber;
-	private String email;
-
+	private String userName;
 	private String password;
 	private String gender;
+	private boolean enabled;
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "registration")
+	private List<Role> roles = new ArrayList<Role>();
 
 	public Registration() {
+		
 	}
+	public Registration(Registration registration) {
+		this.userId = registration.getUserId();
+		this.firstName = registration.getFirstName();
+		this.lastName = registration.getLastName();
+		this.fatherName = registration.getFatherName();
+		this.motherName = registration.getMotherName();
+		this.adharNumber = registration.getAdharNumber();
+		this.phoneNumber = registration.getPhoneNumber();
+		this.userName = registration.getUserName();
+		this.password = registration.getPassword();
+		this.gender = registration.getGender();
+		this.enabled = registration.isEnabled();
+		this.roles = registration.getRoles();
+	}
+
+
 
 	public Integer getUserId() {
 		return userId;
@@ -92,14 +119,18 @@ public class Registration {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public String getEmail() {
-		return email;
-	}
+	
 
-	public void setEmail(String email) {
-		this.email = email;
+	
+	public String getUserName() {
+		return userName;
 	}
-
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
 	public String getPassword() {
 		return password;
 	}
@@ -116,12 +147,21 @@ public class Registration {
 		this.gender = gender;
 	}
 
-	@Override
-	public String toString() {
-		return "Registration [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", fatherName=" + fatherName + ", motherName=" + motherName + ", adharNumber=" + adharNumber
-				+ ", phoneNumber=" + phoneNumber + ", email=" + email + ", password=" + password + ", gender=" + gender
-				+ "]";
+	public List<Role> getRoles() {
+		return roles;
 	}
 
+
+	public void addRoleToUser(Role newrole) {
+		newrole.setRegistration(this);
+		roles.add(newrole);
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
 }

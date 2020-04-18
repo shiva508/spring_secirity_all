@@ -14,10 +14,13 @@ public interface RegistrationDao {
 
 	public Integer deleteUser(Integer userid);
 
-	public Registration getUserByEmailAndPassword(String username, String password);
+	public Registration getUserByEmailAndPassword(String userName, String password);
 
 	public Registration getUserByUserId(Integer userId);
 
 	public List<CachePerson> getAllCachePersons();
-	public Long isUserExist(String username);
+
+	public Long isUserExist(String userName);
+
+	public Registration getUserByEmail(String userName);
 }

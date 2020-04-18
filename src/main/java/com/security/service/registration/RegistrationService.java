@@ -9,8 +9,8 @@ public interface RegistrationService {
 	public List<RegistrationForm> usersList();
 	public RegistrationForm updateUser(RegistrationForm registrationForm);
 	public Integer deleteUser(Integer userid);
-	public RegistrationForm getUserByEmailAndPassword(String username,String password);
+	public RegistrationForm getUserByEmailAndPassword(String userName,String password);
 	public RegistrationForm getUserByUserId(Integer userId);
 	public List<CachePerson> getAllCachePersons();
-	public Long isUserExist(String username);
+	public Long isUserExist(String userName);
 }

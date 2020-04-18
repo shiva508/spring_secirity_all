@@ -1,6 +1,7 @@
 package com.security.repository.registration;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -41,12 +42,19 @@ public class RegistrationDaoImpl implements RegistrationDao {
 		return deleteid;
 	}
 	@Override
-	public Registration getUserByEmailAndPassword(String username, String password) {
+	public Registration getUserByEmailAndPassword(String userName, String password) {
 
-		TypedQuery<Registration> query = (TypedQuery<Registration>) entityManager.createQuery("SELECT R FROM Registration R where R.email=:email AND R.password=password");
-		query.setParameter("email", username);
+		TypedQuery<Registration> query = (TypedQuery<Registration>) entityManager.createQuery("SELECT R FROM Registration R where R.userName=:userName AND R.password=password");
+		query.setParameter("userName", userName);
 		query.setParameter("password", password);
 		return  query.getSingleResult();
+	}
+	@Override
+	public Registration getUserByEmail(String userName) {
+		Query query =  entityManager.createQuery("SELECT R FROM Registration R where R.userName=:userName ");
+		query.setParameter("userName", userName);
+		Optional<Registration> registration=query.getResultList().stream().findFirst();
+		return  registration.get();
 	}
 	@Override
 	public Registration getUserByUserId(Integer userId) {
@@ -59,9 +67,9 @@ public class RegistrationDaoImpl implements RegistrationDao {
 		return query.getResultList();
 	}
 	@Override
-	public Long isUserExist(String email) {
-		Query query=entityManager.createQuery("select count(*) from Registration r where r.email=:email");
-		query.setParameter("email", email);
+	public Long isUserExist(String userName) {
+		Query query=entityManager.createQuery("select count(*) from Registration r where r.userName=:userName");
+		query.setParameter("userName", userName);
 		return (Long) query.getSingleResult();
 	}
 }

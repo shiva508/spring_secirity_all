@@ -8,9 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.security.config.BCryptPasswordEncoderPro;
 import com.security.forms.RegistrationForm;
+import com.security.forms.RoleForm;
 import com.security.model.CachePerson;
 import com.security.model.Registration;
+import com.security.model.Role;
 import com.security.repository.registration.RegistrationJpa;
 import ma.glasnost.orika.MapperFacade;
 
@@ -21,15 +25,24 @@ public class RegistrationServiceImpl implements RegistrationService {
 	private MapperFacade formDomineMapperfaced;
 	@Autowired
 	private RegistrationJpa registrationJpa;
-
+	@Autowired
+	private BCryptPasswordEncoderPro bCryptPasswordEncoderPro;
 	@Transactional
 	public RegistrationForm saveUser(RegistrationForm registrationForm) {
 		Registration registration=formDomineMapperfaced.map(registrationForm, Registration.class);
+		processRegistrtion(registrationForm,registration);
+		registration.setPassword(bCryptPasswordEncoderPro.bCryptPasswordEncoder(registration.getPassword()));
 		Registration registrationSaved=registrationJpa.saveUser(registration);
 		RegistrationForm registrationFormSaved =formDomineMapperfaced.map(registrationSaved, RegistrationForm.class);
 		return registrationFormSaved;
 	}
 
+	public void processRegistrtion(RegistrationForm registrationForm,Registration registration) {
+		for(RoleForm roleForms:registrationForm.getRoles()) {
+			Role role= formDomineMapperfaced.map(roleForms, Role.class);
+			registration.addRoleToUser(role);
+		}
+	}
 	@Transactional
 	public List<RegistrationForm> usersList() {
 		List<Registration> registrations=null;
@@ -57,9 +70,9 @@ public class RegistrationServiceImpl implements RegistrationService {
 	}
 
 	@Transactional
-	public RegistrationForm getUserByEmailAndPassword(String username, String password) {
+	public RegistrationForm getUserByEmailAndPassword(String userName, String password) {
 		RegistrationForm registrationForm=null;
-		Registration registration=registrationJpa.getUserByEmailAndPassword(username, password);
+		Registration registration=registrationJpa.getUserByEmailAndPassword(userName, password);
 		registrationForm=formDomineMapperfaced.map(registration, RegistrationForm.class);
 		return registrationForm;
 	}
@@ -76,8 +89,8 @@ public class RegistrationServiceImpl implements RegistrationService {
 	}
 
 	@Override
-	public Long isUserExist(String username) {
-		return registrationJpa.isUserExist(username);
+	public Long isUserExist(String userName) {
+		return registrationJpa.isUserExist(userName);
 	}
 
 }

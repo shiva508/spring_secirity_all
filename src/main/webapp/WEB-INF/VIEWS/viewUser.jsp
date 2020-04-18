@@ -161,7 +161,7 @@
 				</td>
 				<td><div class="col-sm-6">
 					<div class="form-group">
-							<label for="exampleInputFirstName"><c:out value="${user.email}"></c:out></label>
+							<label for="exampleInputFirstName"><c:out value="${user.userName}"></c:out></label>
 					</div>
 				</div>
 				</td>
