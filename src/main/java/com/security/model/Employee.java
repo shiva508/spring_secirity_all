@@ -20,15 +20,6 @@ public class Employee {
 	public Employee() {
 	}
 
-	public Employee(Integer employeeId, String firstName, String lastName, String streetName, String city) {
-		super();
-		this.employeeId = employeeId;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.streetName = streetName;
-		this.city = city;
-	}
-
 	public Integer getEmployeeId() {
 		return employeeId;
 	}
