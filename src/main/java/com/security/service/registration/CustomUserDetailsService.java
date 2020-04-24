@@ -20,12 +20,20 @@ public class CustomUserDetailsService implements UserDetailsService {
 	private RegistrationJpa registrationJpa;
 
 	@Override
-	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+	public CustomUserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 		Optional<Registration> registration=registrationJpa.findByUserName(userName);
 		registration.orElseThrow(() -> new UsernameNotFoundException("Username not found"));
+		System.out.println(registration.map(CustomUserDetails::new).get());
 		return registration.map(CustomUserDetails::new).get();
 	}
 
-	
+	@Transactional
+    public UserDetails loadUserById(Integer userId) {
+		Optional<Registration> registration= registrationJpa.findById(userId);
+		registration.orElseThrow(
+            () -> new UsernameNotFoundException("User not found with id : " + userId)
+        );
+        return registration.map(CustomUserDetails::new).get();
+    }
 
 }

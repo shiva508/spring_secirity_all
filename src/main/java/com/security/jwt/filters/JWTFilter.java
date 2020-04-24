@@ -1,4 +1,4 @@
-package com.security.jwt;
+package com.security.jwt.filters;
 
 import java.io.IOException;
 
@@ -15,6 +15,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.security.jwt.AppJWTService;
 import com.security.service.registration.CustomUserDetailsService;
 
 @Component

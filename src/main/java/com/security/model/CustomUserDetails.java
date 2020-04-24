@@ -19,7 +19,7 @@ public class CustomUserDetails extends Registration implements UserDetails{
                 .map(role -> new SimpleGrantedAuthority(role.getAuthority()))
                 .collect(Collectors.toList());
 	}
-
+	 
 	@Override
 	public String getPassword() {
 		return super.getPassword();
@@ -48,6 +48,11 @@ public class CustomUserDetails extends Registration implements UserDetails{
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+	@Override
+	public String toString() {
+		return "CustomUserDetails [getAuthorities()=" + getAuthorities() + ", getPassword()=" + getPassword()
+				+ ", getUsername()=" + getUsername() + "]";
 	}
 
 }

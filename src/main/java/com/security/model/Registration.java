@@ -1,7 +1,6 @@
 package com.security.model;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -15,13 +14,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-
-
 
 @Entity
 @Table(name = "users")
@@ -39,6 +31,11 @@ public class Registration{
 	private String password;
 	private String gender;
 	private boolean enabled;
+	@Temporal(TemporalType.DATE)
+	@Column(updatable=false)
+	private Date createdDate;
+	@Temporal(TemporalType.DATE)
+	private Date dateOfbirth;
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "registration")
 	private List<Role> roles = new ArrayList<Role>();
@@ -59,6 +56,8 @@ public class Registration{
 		this.gender = registration.getGender();
 		this.enabled = registration.isEnabled();
 		this.roles = registration.getRoles();
+		this.createdDate=registration.getCreatedDate();
+		this.dateOfbirth=registration.getDateOfbirth();
 	}
 
 
@@ -119,9 +118,6 @@ public class Registration{
 		this.phoneNumber = phoneNumber;
 	}
 
-	
-
-	
 	public String getUserName() {
 		return userName;
 	}
@@ -164,4 +160,18 @@ public class Registration{
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = new Date();
+	}
+	public Date getDateOfbirth() {
+		return dateOfbirth;
+	}
+	public void setDateOfbirth(Date dateOfbirth) {
+		this.dateOfbirth = dateOfbirth;
+	}
+	
+	
 }

@@ -17,11 +17,11 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.security.jwt.JWTFilter;
+import com.security.jwt.filters.JWTFilter;
 import com.security.service.registration.CustomUserDetailsService;
 
-@Configuration
-@EnableWebSecurity
+//@Configuration
+//@EnableWebSecurity
 public class AppSpringSecirityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private CustomUserDetailsService customUserDetailsService;

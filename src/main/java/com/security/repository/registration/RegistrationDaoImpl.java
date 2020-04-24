@@ -1,15 +1,19 @@
 package com.security.repository.registration;
 
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import com.security.model.CachePerson;
 import com.security.model.Registration;
@@ -18,12 +22,27 @@ import com.security.model.Registration;
 public class RegistrationDaoImpl implements RegistrationDao {
 	@Autowired
 	private EntityManager entityManager;
+	@Autowired
+	private DataSource dataSource;
 
 	public Registration saveUser(Registration registration) {
 		return entityManager.merge(registration);
 	}
 	@Override
 	public List<Registration> usersList() {
+		try {
+		
+			Connection connection=dataSource.getConnection();
+			 DatabaseMetaData metadata = connection.getMetaData();
+	            ResultSet resultSet = metadata.getColumns(null, null, "users", null);
+	            while (resultSet.next()) {
+	                String name = resultSet.getString("COLUMN_NAME");
+	                System.out.println(name);
+	            }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Query query = entityManager.createQuery("FROM Registration", Registration.class);
 		return query.getResultList();
 	}
